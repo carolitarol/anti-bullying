@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Choose Your Path: Stand Up Against Bullying</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #89CFF0, #FFDEE9);
+    text-align: center;
+    padding: 20px;
+}
+.game-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    opacity: 0.8;
+}
+.score {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+<body>
+
+<div class="game-box">
+<h2>🌟 Choose Your Path: Stand Up Against Bullying 🌟</h2>
+<div class="score">Confidence Points: <span id="score">0</span></div>
+<div id="story"></div>
+<div id="choices"></div>
+</div>
+
+<script>
+let score = 0;
+
+function updateScore(points) {
+    score += points;
+    document.getElementById("score").innerText = score;
+}
+
+function startGame() {
+    document.getElementById("story").innerHTML =
+    "You see a student being laughed at because of their clothes. What do you do?";
+    
+    document.getElementById("choices").innerHTML = `
+        <button onclick="choice1()">Join the laughter</button>
+        <button onclick="choice2()">Walk away silently</button>
+        <button onclick="choice3()">Stand beside the student and change the topic</button>
+    `;
+}
+
+function choice1() {
+    updateScore(-5);
+    nextScene("Joining in makes the student feel worse. Bullying grows when others participate.");
+}
+
+function choice2() {
+    updateScore(0);
+    nextScene("Walking away avoids trouble, but it doesn't help the student either.");
+}
+
+function choice3() {
+    updateScore(10);
+    nextScene("Great choice! Supporting someone shows leadership and kindness.");
+}
+
+function nextScene(message) {
+    document.getElementById("story").innerHTML = message +
+    "<br><br>Later, you receive a mean message in a class group chat. What do you do?";
+    
+    document.getElementById("choices").innerHTML = `
+        <button onclick="choice4()">Reply with something mean</button>
+        <button onclick="choice5()">Screenshot and tell a trusted adult</button>
+        <button onclick="choice6()">Post it publicly</button>
+    `;
+}
+
+function choice4() {
+    updateScore(-5);
+    endGame("Responding with meanness can escalate cyberbullying.");
+}
+
+function choice5() {
+    updateScore(10);
+    endGame("Excellent! Reporting helps stop cyberbullying safely.");
+}
+
+function choice6() {
+    updateScore(-10);
+    endGame("Posting publicly can spread harm and make things worse.");
+}
+
+function endGame(message) {
+    let result = "";
+    if (score >= 15) {
+        result = "🏆 You are a Bullying Prevention Hero!";
+    } else if (score >= 5) {
+        result = "👍 You made some good choices. Keep learning!";
+    } else {
+        result = "💡 Everyone can learn. Try again to become a hero!";
+    }
+
+    document.getElementById("story").innerHTML =
+        message + "<br><br>" + result;
+
+    document.getElementById("choices").innerHTML =
+        '<button onclick="restart()">Play Again</button>';
+}
+
+function restart() {
+    score = 0;
+    document.getElementById("score").innerText = score;
+    startGame();
+}
+
+startGame();
+</script>
+
+</body>
+</html>
